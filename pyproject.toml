@@ -1,8 +1,8 @@
 [tool.poetry]
 
-name = "stardust"
+name = "stardust_xr"
 version = "0.0"
-description = "Stardust Python module"
+description = "Python module for Stardust clients and server implementations"
 
 license = "MIT"
 
@@ -10,8 +10,8 @@ authors = ["Nova King <technobaboo@gmail.com>"]
 
 readme = "README.md"
 
-homepage = "https://pypi.org/project/stardust"
-documentation = "https://stardust.readthedocs.io"
+homepage = "https://pypi.org/project/stardust_xr"
+documentation = "https://stardust_xr.readthedocs.io"
 repository = "https://github.com/technobaboo/stardust-py"
 
 keywords = [
@@ -69,7 +69,7 @@ ipython = "^7.12.0"
 
 [tool.poetry.scripts]
 
-stardust-py = "stardust.cli:main"
+stardust-py = "stardust_xr.cli:main"
 
 [tool.black]
 

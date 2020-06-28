@@ -12,7 +12,7 @@ else:
     notify = Notifier.notify
 
 
-watch_paths = ["stardust", "tests"]
+watch_paths = ["stardust_xr", "tests"]
 
 
 class Options:

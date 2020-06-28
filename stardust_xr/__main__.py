@@ -3,7 +3,7 @@
 """Package entry point."""
 
 
-from stardust.gui import main
+from stardust_xr.gui import main
 
 
 if __name__ == '__main__':  # pragma: no cover

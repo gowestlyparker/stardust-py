@@ -17,8 +17,8 @@ CONFIG = {
     "github_repo": "stardust-py",
     "default_branch": "main",
     "project_name": "stardust-py",
-    "package_name": "stardust",
-    "project_short_description": "Stardust Python module",
+    "package_name": "stardust_xr",
+    "project_short_description": "Python module for Stardust clients and server implementations",
     "python_major_version": 3,
     "python_minor_version": 8,
 }

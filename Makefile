@@ -1,6 +1,6 @@
 # Project settings
 PROJECT := stardust-py
-PACKAGE := stardust
+PACKAGE := stardust_xr
 REPOSITORY := technobaboo/stardust-py
 
 # Project paths

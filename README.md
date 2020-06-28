@@ -1,6 +1,6 @@
 # Overview
 
-Stardust Python module
+Python module for Stardust clients and server implementations
 
 This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-python](https://github.com/jacebrowning/template-python).
 
@@ -37,6 +37,6 @@ After installation, the package can imported:
 
 ```text
 $ python
->>> import stardust
->>> stardust.__version__
+>>> import stardust_xr
+>>> stardust_xr.__version__
 ```

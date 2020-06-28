@@ -6,7 +6,7 @@ from expecter import expect
 
 from click.testing import CliRunner
 
-from stardust.cli import main
+from stardust_xr.cli import main
 
 
 @pytest.fixture
