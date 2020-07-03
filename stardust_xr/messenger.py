@@ -2,7 +2,7 @@ import os
 from time import sleep
 import msgpack
 from nonblock import bgread
-from scenegraph import scenegraph
+from . import scenegraph
 
 class Messenger:
 	messages_in = 0
