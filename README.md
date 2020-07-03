@@ -2,10 +2,6 @@
 
 Python module for Stardust clients and server implementations
 
-This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-python](https://github.com/jacebrowning/template-python).
-
-[![Unix Build Status](https://img.shields.io/travis/technobaboo/stardust-py/main.svg?label=unix)](https://travis-ci.org/technobaboo/stardust-py)
-
 # Setup
 
 ## Requirements
@@ -14,16 +10,10 @@ This project was generated with [cookiecutter](https://github.com/audreyr/cookie
 
 ## Installation
 
-Install it directly into an activated virtual environment:
+Run in the repo's root:
 
-```text
-$ pip install stardust-py
-```
-
-or add it to your [Poetry](https://poetry.eustace.io/) project:
-
-```text
-$ poetry add stardust-py
+```bash
+pip install .
 ```
 
 # Usage
