@@ -22,8 +22,6 @@ class Messenger:
 
 	message_types = {}
 
-	message_queue = None
-
 	def __init__(self, messages_in, messages_out, scenegraph):
 		self.messages_in = messages_in
 		self.messages_out = messages_out
@@ -33,8 +31,6 @@ class Messenger:
 		self.message_types[1] = self.handle_message_method_call
 		self.message_types[2] = self.handle_message_method_return
 		self.message_types[3] = self.handle_message_signal
-
-		self.message_queue = bgread(messages_in)
 
 	def generate_message_id(self):
 		i = 0
@@ -49,7 +45,6 @@ class Messenger:
 			return None
 
 		message = self.pending_messages[id_list.index(id)]
-		print(message)
 		return message
 
 	def process_messages(self):
@@ -82,7 +77,6 @@ class Messenger:
 			pending_message[5](pending_message[2])
 			self.pending_messages.remove(pending_message)
 
-
 	def handle_message_signal(self, message):
 		pass
 
@@ -99,7 +93,6 @@ class Messenger:
 					print("Argument types of",message,"are incorrect")
 					return None
 
-		print("Sending message", message)
 		binary_message = msgpack.packb(message)
 		binary_message_length = len(binary_message).to_bytes(16, byteorder='big', signed=False)
 		os.write(self.messages_out, binary_message_length)
