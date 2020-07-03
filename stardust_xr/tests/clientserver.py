@@ -25,8 +25,8 @@ def main():
 		client(s2c_read, c2s_write)
 
 def client(s2c_read, c2s_write):
-	client_graph = stardust_xr.scenegraph({})
-	client_messager = stardust_xr.messager(s2c_read, c2s_write, client_graph)
+	client_graph = stardust_xr.Scenegraph({})
+	client_messager = stardust_xr.Messenger(s2c_read, c2s_write, client_graph)
 	print("Client messager started")
 
 	print(time.time())
@@ -36,13 +36,13 @@ def client(s2c_read, c2s_write):
 	# client_messager.send_message(message_test, verification=True)
 
 def server(c2s_read, s2c_write):
-	server_graph = stardust_xr.scenegraph({})
+	server_graph = stardust_xr.Scenegraph({})
 
 	obj_test = test_message_object()
 	print(server_graph.new_object(server_graph.format_path("/res/obj"), obj_test, {"new": obj_test.new}))
 
 
-	server_messager = stardust_xr.messager(c2s_read, s2c_write, server_graph)
+	server_messager = stardust_xr.Messager(c2s_read, s2c_write, server_graph)
 	print("Server messager started")
 
 if __name__ == "__main__":

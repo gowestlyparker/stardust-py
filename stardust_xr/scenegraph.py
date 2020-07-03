@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-class scenegraph:
+class Scenegraph:
 	heirarchy = {}
 
 	def __init__(self, init_heirarchy):

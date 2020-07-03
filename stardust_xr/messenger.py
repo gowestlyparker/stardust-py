@@ -4,7 +4,7 @@ import msgpack
 from nonblock import bgread
 from scenegraph import scenegraph
 
-class messager:
+class Messenger:
 	messages_in = 0
 	messages_out = 0
 	scenegraph = None
