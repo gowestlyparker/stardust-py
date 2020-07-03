@@ -39,7 +39,7 @@ def server(c2s_read, s2c_write):
 	server_graph = stardust_xr.Scenegraph({})
 
 	obj_test = test_message_object()
-	print(server_graph.new_object(server_graph.format_path("/res/obj"), obj_test, {"new": obj_test.new}))
+	print(server_graph.new_object("/res/obj", obj_test, {"new": obj_test.new}))
 
 
 	server_messager = stardust_xr.Messenger(c2s_read, s2c_write, server_graph)
