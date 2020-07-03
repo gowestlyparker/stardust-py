@@ -1,0 +1,18 @@
+namespace Stardust;
+
+enum MessageType : byte {
+	Error = 0,
+	MethodCall,
+	MethodReturn,
+	Signal
+}
+
+table Message {
+	type: MessageType = Error;
+	id: int;
+	object: string (required);
+	method: string (required);
+	data:[ubyte] (flexbuffer);
+}
+
+root_type Message;
