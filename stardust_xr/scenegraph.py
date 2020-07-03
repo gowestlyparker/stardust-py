@@ -24,7 +24,9 @@ class Scenegraph:
 
 		return current_object
 
-	def new_object(self, path_tuple, object_reference, object_methods):
+	def new_object(self, path_string, object_reference, object_methods):
+		path_tuple = path_string[1:].split('/')
+
 		current_object = self.heirarchy
 		for tuple_item in path_tuple:
 			if tuple_item not in current_object:
@@ -39,14 +41,18 @@ class Scenegraph:
 		print("Heirarchy is now ", self.heirarchy)
 		return current_object
 
-	def del_object(self, path_tuple, delete_reference = True):
+	def del_object(self, path_string, delete_reference = True):
+		path_tuple = path_string[1:].split('/')
+
 		object = self.get_object(path_tuple)
 		if delete_reference:
 			del object["object_reference"]
 		del object
 
 	# Override this method to integrate into an existing scenegraph
-	def call_object_method(self, path_tuple, method_name, args):
+	def call_object_method(self, path_string, method_name, args):
+		path_tuple = path_string[1:].split('/')
+		
 		object_methods = self.get_object(path_tuple)["object_methods"]
 		if method_name not in object_methods:
 			error = method_name+" is not in "+path_tuple[-1]+"'s methods"
