@@ -20,7 +20,7 @@ pip install .
 
 After installation, the package can imported:
 
-```text
+```python
 $ python
 >>> import stardust_xr
 >>> stardust_xr.__version__
