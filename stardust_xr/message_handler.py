@@ -39,9 +39,9 @@ class MessageHandler:
 	def handle_message_method_call(self, message):
 		method_return, error = self.scenegraph.call_object_method(message[2], message[3], message[4])
 		if error is None:
-			self.send_message([2, message[1], method_return])
+			self.message_producer.send_message([2, message[1], method_return])
 		else:
-			self.send_message([0, message[1], error])
+			self.message_producer.send_message([0, message[1], error])
 
 	def handle_message_method_return(self, message):
 		pending_message = self.get_message(message[1])
