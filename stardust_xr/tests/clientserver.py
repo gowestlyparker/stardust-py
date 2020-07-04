@@ -29,7 +29,6 @@ def client(s2c_read, c2s_write):
 	client_messager = stardust_xr.Messenger(s2c_read, c2s_write, client_graph)
 	print("Client messager started")
 
-	print(time.time())
 	client_messager.execute_remote_method("/res/obj", "new", ["/obj/cubedemo/cube", "~/Downloads/cube.gltf"])
 
 	# message_test = [1, client_messager.generate_message_id(), "/res/obj", "new", ["/obj/cubedemo/cube", "~/Downloads/cube.gltf"]]
@@ -39,7 +38,7 @@ def server(c2s_read, s2c_write):
 	server_graph = stardust_xr.Scenegraph({})
 
 	obj_test = test_message_object()
-	print(server_graph.new_object("/res/obj", obj_test, {"new": obj_test.new}))
+	server_graph.new_object("/res/obj", obj_test, {"new": obj_test.new})
 
 
 	server_messager = stardust_xr.Messenger(c2s_read, s2c_write, server_graph)

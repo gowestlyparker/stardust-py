@@ -11,7 +11,6 @@ class Scenegraph:
 		#THIS is bugging out -- moses @ jun 9, 11 AM
 		current_object = self.heirarchy
 		for tuple_item in path_tuple:
-			print("current object is " , current_object, "current tuple_item is " , tuple_item)
 			if type(current_object) is dict:
 				if tuple_item in current_object:
 					current_object = current_object[tuple_item]
@@ -38,7 +37,6 @@ class Scenegraph:
 
 		current_object["object_reference"] = object_reference
 		current_object["object_methods"] = object_methods
-		print("Heirarchy is now ", self.heirarchy)
 		return current_object
 
 	def del_object(self, path_string, delete_reference = True):
