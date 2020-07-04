@@ -1,8 +1,9 @@
 import os
-import msgpack
 import threading
 import time
-from . import message_producer, scenegraph, utils
+import flatbuffers
+import flatbuffers.flexbuffers as flexbuffers
+from . import message, message_producer, scenegraph, utils
 
 class MessageHandler (threading.Thread):
 	messages_in = 0
@@ -40,7 +41,11 @@ class MessageHandler (threading.Thread):
 		message = self.pending_messages[id_list.index(id)]
 		return message
 
-	@utils.benchmark
+	def decode_data(self, flat_message):
+		flex_bytes = flat_message.DataAsNumpy().tobytes()
+		data = flexbuffers.Loads(flex_bytes)
+		return data
+
 	def process_messages(self):
 		binary_message_length = os.read(self.messages_in, 16)
 		message_length = int.from_bytes(binary_message_length, byteorder='big', signed=False)
@@ -48,35 +53,35 @@ class MessageHandler (threading.Thread):
 			print("Pipe's write on other end broke")
 			return False
 
-		print("Recieved message of length", message_length)
-
 		binary_message = os.read(self.messages_in, message_length)
-		message = msgpack.unpackb(binary_message)
+		flat_message = message.Message.GetRootAsMessage(binary_message, 0)
 
-		print("with content", message)
-		self.message_types[message[0]](message)
+		self.message_types[flat_message.Type()](flat_message)
 		return True
 
-	def handle_message_error(self, message):
-		print(message[2])
+	def handle_message_error(self, flat_message):
+		print(self.decode_data(flat_message))
 
-	def handle_message_method_call(self, message):
-		method_return, error = self.scenegraph.call_object_method(message[2], message[3], message[4])
+	def handle_message_method_call(self, flat_message):
+		method_return, error = self.handle_message_signal(flat_message)
 		if error is None:
-			self.message_producer.send_message([2, message[1], method_return])
-		else:
-			self.message_producer.send_message([0, message[1], error])
+			self.message_producer.send_message([2, flat_message.Id(), method_return])
 
-	def handle_message_method_return(self, message):
-		pending_message = self.get_message(message[1])
-		if pending_message is None:
-			return None
+	def handle_message_method_return(self, flat_message):
+		pending_message = self.pending_messages[flat_message.Id()]
+		#if pending_message is None:
+		#	return None
 
 		if len(pending_message) == 5:
-			self.pending_messages[message[1]] = message
+			pending_message[0] = 2
+			pending_message[2] = self.decode_data(flat_message)
 		elif len(pending_message) == 6:
 			pending_message[5](pending_message[2])
 			self.pending_messages.remove(pending_message)
 
-	def handle_message_signal(self, message):
-		pass
+	def handle_message_signal(self, flat_message):
+		method_return, error = self.scenegraph.call_object_method(flat_message.Object().decode('ascii'), flat_message.Method().decode('ascii'), self.decode_data(flat_message))
+
+		if error is not None:
+			self.message_producer.send_message([0, flat_message.Id(), error])
+		return method_return, error

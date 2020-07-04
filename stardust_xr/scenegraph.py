@@ -54,4 +54,6 @@ class Scenegraph:
 		if method_name not in object_methods:
 			error = method_name+" is not in "+path_tuple[-1]+"'s methods"
 			return None, error
+		if args is None:
+			return object_methods[method_name](), None
 		return object_methods[method_name](*args), None

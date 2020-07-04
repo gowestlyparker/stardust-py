@@ -1,6 +1,5 @@
 import os
 from time import sleep
-import msgpack
 from . import message_producer, message_handler, scenegraph
 
 class Messenger:
@@ -19,25 +18,20 @@ class Messenger:
 		self.message_handler.start()
 
 	def generate_message_id(self):
-		i = 0
-		while i in [item[1] for item in self.pending_messages]:
-			i += 1
-		return i
+		return len(self.pending_messages)
 
-	def execute_remote_method(self, object_path, method_name, method_args = [], async_function=None):
-		message = [1, self.generate_message_id(), object_path, method_name, method_args]
+	def execute_remote_method(self, object_path, method_name, method_args = None, async_function=None):
+		id = self.generate_message_id()
+		message = [1, id, object_path, method_name, method_args]
 		if async_function is not None:
 			message.append(async_function)
 
-		index = len(self.pending_messages)
 		self.pending_messages.append(message)
 		self.message_producer.send_message(message)
 
 		if async_function is None:
-			print("Pending messages:",self.pending_messages)
-			while self.pending_messages[index][0] != 2:
+			while self.pending_messages[id][0] != 2:
 				sleep(0.00000001)
-			return_message = self.pending_messages[index]
-			self.pending_messages.pop(index)
-			print("Message",message,"returned",return_message)
+			return_message = self.pending_messages[id]
+			self.pending_messages.pop(id)
 			return return_message[2]
