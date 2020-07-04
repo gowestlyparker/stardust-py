@@ -14,12 +14,6 @@ class Messenger:
 	check_for_messages_enabled = True
 	check_for_messages_thread = None
 
-	message_type_verification = [
-		[int, int, str],
-		[int, int, str, str, list],
-		[int, int, None]
-	]
-
 	message_types = {}
 
 	def __init__(self, messages_in, messages_out, scenegraph):
@@ -80,19 +74,7 @@ class Messenger:
 	def handle_message_signal(self, message):
 		pass
 
-	def send_message(self, message, verification = False):
-		if verification:
-			message_type = message[0]
-			message_type_verification_types = self.message_type_verification[message_type]
-
-			if len(message) is not len(message_type_verification_types):
-				print("Length of",message,"is incorrect")
-				return None
-			for i in range(len(message)):
-				if type(message[i]) is not message_type_verification_types[i]:
-					print("Argument types of",message,"are incorrect")
-					return None
-
+	def send_message(self, message):
 		binary_message = msgpack.packb(message)
 		binary_message_length = len(binary_message).to_bytes(16, byteorder='big', signed=False)
 		os.write(self.messages_out, binary_message_length)
