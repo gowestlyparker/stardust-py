@@ -1,14 +1,7 @@
 namespace Stardust;
 
-enum MessageType : byte {
-	Error = 0,
-	MethodCall,
-	MethodReturn,
-	Signal
-}
-
 table Message {
-	type: MessageType = Error;
+	type: uint;
 	id: int;
 	object: string (required);
 	method: string (required);

@@ -24,7 +24,7 @@ class Message(object):
     def Type(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
-            return self._tab.Get(flatbuffers.number_types.Int8Flags, o + self._tab.Pos)
+            return self._tab.Get(flatbuffers.number_types.Uint32Flags, o + self._tab.Pos)
         return 0
 
     # Message
@@ -76,7 +76,7 @@ class Message(object):
         return o == 0
 
 def MessageStart(builder): builder.StartObject(5)
-def MessageAddType(builder, type): builder.PrependInt8Slot(0, type, 0)
+def MessageAddType(builder, type): builder.PrependUint32Slot(0, type, 0)
 def MessageAddId(builder, id): builder.PrependInt32Slot(1, id, 0)
 def MessageAddObject(builder, object): builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(object), 0)
 def MessageAddMethod(builder, method): builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(method), 0)
