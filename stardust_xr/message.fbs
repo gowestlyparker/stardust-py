@@ -3,8 +3,9 @@ namespace Stardust;
 table Message {
 	type: uint;
 	id: int;
-	object: string (required);
-	method: string (required);
+	object: string;
+	method: string;
+	error: string;
 	data:[ubyte] (flexbuffer);
 }
 

@@ -1,8 +1,8 @@
 import os
 import threading
 import time
+import msgpack
 import flatbuffers
-import flatbuffers.flexbuffers as flexbuffers
 from . import message, message_producer, scenegraph, utils
 
 class MessageHandler (threading.Thread):
@@ -43,7 +43,7 @@ class MessageHandler (threading.Thread):
 
 	def decode_data(self, flat_message):
 		flex_bytes = flat_message.DataAsNumpy().tobytes()
-		data = flexbuffers.Loads(flex_bytes)
+		data = msgpack.unpackb(flex_bytes)
 		return data
 
 	def process_messages(self):
@@ -60,7 +60,7 @@ class MessageHandler (threading.Thread):
 		return True
 
 	def handle_message_error(self, flat_message):
-		print(self.decode_data(flat_message))
+		print(flat_message.Error().decode('ascii'))
 
 	def handle_message_method_call(self, flat_message):
 		method_return, error = self.handle_message_signal(flat_message)

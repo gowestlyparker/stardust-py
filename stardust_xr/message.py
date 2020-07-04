@@ -49,8 +49,15 @@ class Message(object):
         return None
 
     # Message
-    def Data(self, j):
+    def Error(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        if o != 0:
+            return self._tab.String(o + self._tab.Pos)
+        return None
+
+    # Message
+    def Data(self, j):
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             a = self._tab.Vector(o)
             return self._tab.Get(flatbuffers.number_types.Uint8Flags, a + flatbuffers.number_types.UOffsetTFlags.py_type(j * 1))
@@ -58,28 +65,29 @@ class Message(object):
 
     # Message
     def DataAsNumpy(self):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             return self._tab.GetVectorAsNumpy(flatbuffers.number_types.Uint8Flags, o)
         return 0
 
     # Message
     def DataLength(self):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Message
     def DataIsNone(self):
-        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(12))
+        o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         return o == 0
 
-def MessageStart(builder): builder.StartObject(5)
+def MessageStart(builder): builder.StartObject(6)
 def MessageAddType(builder, type): builder.PrependUint32Slot(0, type, 0)
 def MessageAddId(builder, id): builder.PrependInt32Slot(1, id, 0)
 def MessageAddObject(builder, object): builder.PrependUOffsetTRelativeSlot(2, flatbuffers.number_types.UOffsetTFlags.py_type(object), 0)
 def MessageAddMethod(builder, method): builder.PrependUOffsetTRelativeSlot(3, flatbuffers.number_types.UOffsetTFlags.py_type(method), 0)
-def MessageAddData(builder, data): builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(data), 0)
+def MessageAddError(builder, error): builder.PrependUOffsetTRelativeSlot(4, flatbuffers.number_types.UOffsetTFlags.py_type(error), 0)
+def MessageAddData(builder, data): builder.PrependUOffsetTRelativeSlot(5, flatbuffers.number_types.UOffsetTFlags.py_type(data), 0)
 def MessageStartDataVector(builder, numElems): return builder.StartVector(1, numElems, 1)
 def MessageEnd(builder): return builder.EndObject()
