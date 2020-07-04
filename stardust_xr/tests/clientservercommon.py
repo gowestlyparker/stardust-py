@@ -19,6 +19,7 @@ def client(s2c_read, c2s_write):
 	return_time = time.time()
 
 	print("The message took",message_time - start_time, "seconds to execute the remote method and",return_time - message_time,"seconds to get back, taking",return_time - start_time,"seconds blocked")
+	print("Press enter to exit")
 
 def server(c2s_read, s2c_write):
 	server_graph = stardust_xr.Scenegraph({})
@@ -28,4 +29,4 @@ def server(c2s_read, s2c_write):
 
 	server_messager = stardust_xr.Messenger(c2s_read, s2c_write, server_graph)
 	print("Server messager started")
-	input("Press Enter to exit...\n")
+	input("")
