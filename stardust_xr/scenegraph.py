@@ -6,8 +6,7 @@ class Scenegraph:
 		self.heirarchy = init_heirarchy
 
 	# Override this method to integrate into an existing scenegraph
-	def get_object(self, path_string):
-		path_tuple = path_string[1:].split('/')
+	def get_object(self, path_tuple):
 		#THIS is bugging out -- moses @ jun 9, 11 AM
 		current_object = self.heirarchy
 		for tuple_item in path_tuple:
