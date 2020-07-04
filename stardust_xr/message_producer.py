@@ -1,5 +1,6 @@
 import os
 import msgpack
+from . import utils
 
 class MessageProducer:
 	messages_out = 0
@@ -12,6 +13,7 @@ class MessageProducer:
 		self.scenegraph = scenegraph
 
 	def send_message(self, message):
+		print("Sending message",message)
 		binary_message = msgpack.packb(message)
 		binary_message_length = len(binary_message).to_bytes(16, byteorder='big', signed=False)
 		os.write(self.messages_out, binary_message_length)
