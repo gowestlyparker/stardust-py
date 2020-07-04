@@ -49,7 +49,7 @@ class Scenegraph:
 	# Override this method to integrate into an existing scenegraph
 	def call_object_method(self, path_string, method_name, args):
 		path_tuple = path_string[1:].split('/')
-		
+
 		object_methods = self.get_object(path_tuple)["object_methods"]
 		if method_name not in object_methods:
 			error = method_name+" is not in "+path_tuple[-1]+"'s methods"
