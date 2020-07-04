@@ -11,7 +11,7 @@ class test_message_object:
 
 def client(s2c_read, c2s_write):
 	client_graph = stardust_xr.Scenegraph({})
-	client_messager = stardust_xr.Messenger(s2c_read, c2s_write, client_graph, 1)
+	client_messager = stardust_xr.Messenger(s2c_read, c2s_write, client_graph)
 	print("Client messager started")
 
 	start_time = time.time()
@@ -26,6 +26,6 @@ def server(c2s_read, s2c_write):
 	obj_test = test_message_object()
 	server_graph.new_object("/test", obj_test, {"time": obj_test.time})
 
-	server_messager = stardust_xr.Messenger(c2s_read, s2c_write, server_graph, 1)
+	server_messager = stardust_xr.Messenger(c2s_read, s2c_write, server_graph)
 	print("Server messager started")
 	input("Press Enter to exit...\n")
