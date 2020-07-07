@@ -1,4 +1,5 @@
 import time
+import pyximport; pyximport.install()
 import stardust_xr
 
 class test_message_object:
@@ -14,15 +15,11 @@ def client(s2c_read, c2s_write):
 	client_messager = stardust_xr.Messenger(s2c_read, c2s_write, client_graph)
 	print("Client messager started")
 
-	iterations = 1000
-
 	start_time = time.time()
-	for i in range(0, iterations):
-		client_messager.execute_remote_method("/test", "time")
+	message_time = client_messager.execute_remote_method("/test", "time")
 	return_time = time.time()
 
-	#print("The message took",message_time - start_time, "seconds to execute the remote method and",return_time - message_time,"seconds to get back, taking",return_time - start_time,"seconds blocked")
-	print("The messages took on average",(return_time - start_time) / iterations, "seconds to return")
+	print("The message took",message_time - start_time, "seconds to execute the remote method and",return_time - message_time,"seconds to get back, taking",return_time - start_time,"seconds blocked")
 	print("Press enter to exit")
 
 def server(c2s_read, s2c_write):

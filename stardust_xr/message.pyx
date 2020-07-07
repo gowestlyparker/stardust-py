@@ -6,7 +6,7 @@ import flatbuffers
 from flatbuffers.compat import import_numpy
 np = import_numpy()
 
-class Message(object):
+cdef class Message(object):
     __slots__ = ['_tab']
 
     @classmethod
@@ -21,14 +21,14 @@ class Message(object):
         self._tab = flatbuffers.table.Table(buf, pos)
 
     # Message
-    def Type(self):
+    cdef char Type(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(4))
         if o != 0:
             return self._tab.Get(flatbuffers.number_types.Uint32Flags, o + self._tab.Pos)
         return 0
 
     # Message
-    def Id(self):
+    cdef int Id(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(6))
         if o != 0:
             return self._tab.Get(flatbuffers.number_types.Int32Flags, o + self._tab.Pos)
@@ -71,14 +71,14 @@ class Message(object):
         return 0
 
     # Message
-    def DataLength(self):
+    cdef int DataLength(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         if o != 0:
             return self._tab.VectorLen(o)
         return 0
 
     # Message
-    def DataIsNone(self):
+    cdef int DataIsNone(self):
         o = flatbuffers.number_types.UOffsetTFlags.py_type(self._tab.Offset(14))
         return o == 0
 

@@ -3,29 +3,28 @@ import msgpack
 import flatbuffers
 from . import message, utils
 
-class MessageProducer:
-	messages_out = 0
-	pending_messages = None
+cdef class MessageProducer:
+	cdef int messages_out
+	cdef list pending_messages
 	scenegraph = None
 
 	flat_builder = None
 
-	def __init__(self, messages_out, pending_messages, scenegraph):
+	def __init__(self, int messages_out, list pending_messages, scenegraph):
 		self.messages_out = messages_out
 		self.pending_messages = pending_messages
 		self.scenegraph = scenegraph
 
 		self.flat_builder = flatbuffers.Builder(1024)
 
-	def send_message(self, message):
+	cdef send_message(self, list message):
 		print("Sending message",message)
 		binary_message = self.encode_message(message)
 		binary_message_length = len(binary_message).to_bytes(16, byteorder='big', signed=False)
 		os.write(self.messages_out, binary_message_length)
 		os.write(self.messages_out, binary_message)
 
-	@utils.benchmark
-	def encode_message(self, message_tuple):
+	cdef encode_message(self, list message_tuple):
 		object_string = None
 		method_string = None
 		error_string = None
@@ -59,6 +58,6 @@ class MessageProducer:
 		return self.flat_builder.Output()
 
 
-	def send_signal(self, object_path, signal_name, signal_data):
+	cdef send_signal(self, char *object_path, char *signal_name, list signal_data):
 		message = [3, object_path, signal_name, signal_data]
 		self.send_message(message)
